@@ -1,0 +1,80 @@
+Weather via Commandline
+-----------------------
+
+This tiny program helps to display current weather from the Wunderground API on the commandline.
+
+It handles logging, caching, config file and various other features.
+
+Requirements
+------------
+
+  o Ruby
+  o GNU/Linux System
+  o Wunderground API key
+
+Examples
+--------
+
+% ruby19 src/Weather.rb -h
+
+Usage: Weather.rb [options]
+
+General options:
+        --config FILENAME            Use this file as config
+
+Specific options:
+    -q, --quiet                      Run quietly, don't output much
+        --debug                      Print verbose output and more debugging
+
+Common options:
+    -c, --colorize                   Colorizes the output of the script for easier reading
+    -h, --help                       Show this message
+        --version                    Show version
+
+
+% ruby19 src/Weather.rb -q
+
+Where:    Tokyo
+Current:  Light Rain Showers - 13 Degrees C - 94% Humidity
+
+Forecast
+
+Sunday          (cloudy         )    Overcast with a chance of rain in the afternoon
+Sunday Night    (rain           )    Overcast with rain
+Monday          (tstorms        )    Overcast with thunderstorms in the morning, then partly cloudy with a chance of a thunderstorm and rain
+Monday Night    (partlycloudy   )    Partly cloudy in the evening, then overcast with a chance of rain
+
+
+Todo
+----
+
+See the .todo file (devtodo).
+
+
+Development
+-----------
+
+% rake -T 
+(in /home/br/projects/Battery)
+  rake all                 # Default Task - Run cucumber and rspec with rcov
+  rake clean               # Clean up temporary data
+  rake cucumber            # Run Cucumber features
+  rake flay                # Flay the code
+  rake flog                # Flog the code
+  rake rcov:all            # Run both specs and features to generate aggregated coverage
+  rake rcov:clobber_rspec  # Remove rcov products for rspec
+  rake rcov:cucumber       # Run Cucumber features
+  rake rcov:rspec          # Run specs using RCov
+  rake yardoc              # Generate Yardoc documentation
+
+
+
+Copyright
+---------
+
+(c) 2012, Bjoern Rennhak, under a triple license
+
+                o MIT licence. http://www.opensource.org/licenses/mit-license.php
+                o GPLv2 license
+                o BSD license
+
