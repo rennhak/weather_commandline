@@ -43,7 +43,7 @@ module Weather
         @cache                      = Cache.new
         @result                     = nil
 
-        if( @cache.cached? and @cache.valid? )
+        if( @cache.cached? and @cache.valid? and ( not @options.recache ) )
           @logger.message( :info, "Cache available and valid" )
           @result                   = @cache.load_cache
         else
@@ -148,6 +148,7 @@ module Weather
       options.colorize                      = false
       options.debug                         = false
       options.quiet                         = false
+      options.recache                       = false
 
       options.config_filename               = ENV["HOME"] + "/.weatherrc"
 
@@ -165,6 +166,10 @@ module Weather
 
         opts.separator ""
         opts.separator "Specific options:"
+
+        opts.on("-r", "--recache", "Re-cache data from Wunderground API" ) do |recache|
+          options.recache = recache
+        end
 
         opts.on("-q", "--quiet", "Run quietly, don't output much") do |quiet|
           options.quiet = quiet
