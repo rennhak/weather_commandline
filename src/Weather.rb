@@ -24,6 +24,7 @@ module Weather
     def initialize options = nil
       @options                    = options
 
+
       unless( options.nil? ) # {{{
         @config_class               = Weather::Config.new( @options.config_filename )
         @config                     = @config_class.content
@@ -101,6 +102,21 @@ module Weather
       # Printout
       puts "Where:    #{location.to_s}"
       puts "Current:  #{weather_now.to_s} - #{weather_temp.to_s} Degrees C - #{weather_humidity.to_s} Humidity"
+
+      plus  = ""
+      minus = ""
+
+      if( weather_temp.to_i >= 0 )
+        40.times { minus += "-" }
+        weather_temp.to_i.times { plus += "|" }
+        (40-weather_temp.to_i).times { plus += "-" }
+      else
+        40.times { plus += "-" }
+        (40-weather_temp.to_i).times { minus += "-" }
+        weather_temp.to_i.times { minus += "|" }
+      end
+
+      puts "          [ #{@logger.colorize( "LightBlue", minus.to_s )} #{@logger.colorize( "Red", plus.to_s )} ]"
       puts ""
 
       puts "Forecast"
@@ -115,6 +131,17 @@ module Weather
       end
 
     end # }}}
+
+    # @fn        def percentage_of input, scale_value = 20 # {{{
+    # @brief     The percentage_of helper funcction gives back an percentage according to a given scale value
+    # @param input Integer value which represents e.g. a current battery charge
+    # @param scale_value Integer value which represents e.g. a full battery charge or the design capacity
+    # @returns Percentage value calculated by (input.to_f/(scale_value.to_f/100.0)) with integer precision
+    # @helps formatting
+    def percentage_of input, scale_value = 20
+      onePercent  = scale_value.to_f / 100.0
+      ( input.to_f / onePercent ).to_i
+    end # of def length }}}
 
     # @fn        def online? # {{{
     # @brief     Check if we are online
@@ -410,8 +437,8 @@ module Weather
   # @brief      Logger class handling the log output
   class Logger
 
-    # @fn           def initialize options = nil # {{{
-    # @brief        Constructor for the Logger class
+    # @fn     def initialize options = nil # {{{
+    # @brief  Constructor for the Logger class
     def initialize options = nil
 
       # Input sanity check # {{{
