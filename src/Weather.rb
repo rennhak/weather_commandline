@@ -103,20 +103,41 @@ module Weather
       puts "Where:    #{location.to_s}"
       puts "Current:  #{weather_now.to_s} - #{weather_temp.to_s} Degrees C - #{weather_humidity.to_s} Humidity"
 
-      plus  = ""
-      minus = ""
+      verywarm  = ""
+      warm      = ""
+      cold      = ""
+      verycold  = ""
 
       if( weather_temp.to_i >= 0 )
-        40.times { minus += "-" }
-        weather_temp.to_i.times { plus += "|" }
-        (40-weather_temp.to_i).times { plus += "-" }
+        20.times { cold += "-" }
+        20.times { verycold += "-" }
+
+        if( weather_temp.to_i <= 20 )
+          weather_temp.to_i.times { warm += "|" }
+          (20 - weather_temp.to_i).times { warm += "-" }
+          20.times { verywarm += "-" }
+        else
+          20.times { warm += "|" }
+          (weather_temp.to_i - 20).times { verywarm += "|" }
+          (20 - (weather_temp.to_i - 20 ) ).times { verywarm += "-" }
+        end
       else
-        40.times { plus += "-" }
-        (40-weather_temp.to_i).times { minus += "-" }
-        weather_temp.to_i.times { minus += "|" }
+        20.times { warm += "-" }
+        20.times { verywarm += "-" }
+
+        if( weather_temp.to_i >= -20 )
+          weather_temp.to_i.times { cold += "|" }
+          (20 - weather_temp.to_i.abs).times { cold += "-" }
+          20.times { verycold += "-" }
+        else
+          20.times { cold += "|" }
+          (weather_temp.to_i.abs - 20).times { verycold += "|" }
+          (20 - (weather_temp.to_i.abs - 20 ) ).times { verycold += "-" }
+        end
+
       end
 
-      puts "          [ #{@logger.colorize( "LightBlue", minus.to_s )} #{@logger.colorize( "Red", plus.to_s )} ]"
+      puts "          [ #{@logger.colorize( "Blue", verycold.to_s )}#{@logger.colorize( "LightBlue", cold.to_s )}#{@logger.colorize( "Yellow", warm.to_s )}#{@logger.colorize( "Red", verywarm.to_s )} ]"
       puts ""
 
       puts "Forecast"
