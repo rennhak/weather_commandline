@@ -3,7 +3,8 @@ Weather via Commandline
 
 This tiny program helps to display current weather from the Wunderground API on the commandline.
 
-It handles logging, caching, config file and various other features.
+It handles logging, caching, config file and various other features. Displays also current
+temperature with colorized progress style bar.
 
 Requirements
 ------------
@@ -36,6 +37,7 @@ Common options:
 
 Where:    Tokyo
 Current:  Light Rain Showers - 13 Degrees C - 94% Humidity
+          [ ----------------------------------------|||||||||||||||||----------------------- ]
 
 Forecast
 
